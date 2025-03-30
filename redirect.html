@@ -2,38 +2,39 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Twitch Login Redirect</title>
+  <title>Logging in to Twitch...</title>
   <style>
     body {
+      background-color: #0e0e0e;
+      color: #ddd;
       font-family: system-ui, sans-serif;
-      background-color: #111;
-      color: #eee;
-      text-align: center;
-      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
     }
-    .status {
-      margin-top: 20px;
-      font-size: 16px;
+    .box {
+      text-align: center;
     }
   </style>
-  <script>
-    window.onload = () => {
-      const hash = window.location.hash;
-      const token = new URLSearchParams(hash.slice(1)).get('access_token');
-
-      const statusEl = document.getElementById("status");
-
-      if (token) {
-        localStorage.setItem('twitch_token', token);
-        statusEl.innerText = "✅ Twitch token captured! You can close this tab.";
-      } else {
-        statusEl.innerText = "❌ No token found. Please try again.";
-      }
-    };
-  </script>
 </head>
 <body>
-  <h2>Logging in to Twitch...</h2>
-  <p class="status" id="status">Waiting for token...</p>
+  <div class="box">
+    <h2>Logging in to Twitch...</h2>
+    <p id="status">Capturing token...</p>
+  </div>
+
+  <script>
+    const hash = new URLSearchParams(window.location.hash.substring(1));
+    const token = hash.get('access_token');
+
+    if (token) {
+      window.opener?.postMessage({ type: 'twitch-auth', token }, '*');
+      document.getElementById('status').textContent = '✅ Twitch token captured! You can close this tab.';
+    } else {
+      document.getElementById('status').textContent = '❌ Failed to capture token.';
+    }
+  </script>
 </body>
 </html>
