@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Twitch Login Redirect</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background-color: #111;
+      color: #eee;
+      text-align: center;
+      padding: 40px;
+    }
+    .status {
+      margin-top: 20px;
+      font-size: 16px;
+    }
+  </style>
+  <script>
+    window.onload = () => {
+      const hash = window.location.hash;
+      const token = new URLSearchParams(hash.slice(1)).get('access_token');
+
+      const statusEl = document.getElementById("status");
+
+      if (token) {
+        localStorage.setItem('twitch_token', token);
+        statusEl.innerText = "✅ Twitch token captured! You can close this tab.";
+      } else {
+        statusEl.innerText = "❌ No token found. Please try again.";
+      }
+    };
+  </script>
+</head>
+<body>
+  <h2>Logging in to Twitch...</h2>
+  <p class="status" id="status">Waiting for token...</p>
+</body>
+</html>
