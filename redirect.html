@@ -8,18 +8,41 @@
       font-family: system-ui, sans-serif;
       background-color: #111;
       color: #ddd;
-      padding: 30px;
-      text-align: center;
+      padding: 0;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    #tokenBox {
+
+    .container {
+      text-align: center;
       background-color: #222;
+      padding: 30px;
+      border-radius: 8px;
+      border: 1px solid #444;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    h2 {
+      color: #4CAF50; /* Green for success */
+    }
+
+    #tokenBox {
+      background-color: #333;
       padding: 12px;
       border-radius: 6px;
       border: 1px solid #666;
       margin-top: 20px;
       word-break: break-all;
       font-size: 14px;
+      color: #fff;
+      text-align: center;
+      min-height: 40px; /* Ensuring it has enough space */
     }
+
     button {
       margin-top: 20px;
       padding: 6px 12px;
@@ -29,14 +52,26 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #7a32db;
+    }
+
+    .spacer {
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <h2>✅ Twitch Token Retrieved</h2>
-  <p>Copy the token below and paste it into the plugin settings manually:</p>
-  <div id="tokenBox">Loading...</div>
-  <button onclick="copyToken()">Copy Token</button>
+
+  <div class="container">
+    <h2>Twitch Token Retrieved</h2>
+    <p>Copy the token below and paste it into the plugin settings manually:</p>
+    <div id="tokenBox">Loading...</div>
+    <button onclick="copyToken()">Copy Token</button>
+  </div>
 
   <script>
     function extractTokenFromHash() {
